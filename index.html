@@ -38,26 +38,23 @@
             </div>
             <div>
                 <h1 class="text-lg font-bold leading-tight">الدليل الإلكتروني الذكي</h1>
-                <p class="text-[10px] text-blue-200 uppercase tracking-tighter">قاعدة بيانات المتابعة الميدانية - قلقيلية</p>
+                <p class="text-[10px] text-blue-200 uppercase tracking-tighter">مديرية التربية والتعليم - قلقيلية</p>
             </div>
         </div>
         <div class="text-left">
             <p class="text-xs opacity-90">إعداد: <span class="font-bold text-brand-gold">أ. عبد اللطيف رضوان</span></p>
-            <p class="text-[10px] opacity-70">إصدار SharePoint المطور</p>
+            <p class="text-[10px] opacity-70">دعم Google Drive & SharePoint</p>
         </div>
     </header>
 
     <!-- Chat Area -->
     <main id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-6 bg-slate-50 shadow-inner">
         <!-- Sync Indicator -->
-        <div id="sync-status" class="hidden bg-white border-2 border-blue-100 p-4 rounded-2xl shadow-md space-y-3 animate-in fade-in duration-500">
+        <div id="sync-status" class="hidden bg-white border-2 border-blue-100 p-4 rounded-2xl shadow-md space-y-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <i class="fa-solid fa-cloud text-blue-400 text-xl"></i>
-                        <i class="fa-solid fa-sync fa-spin absolute -top-1 -right-1 text-[10px] text-blue-600"></i>
-                    </div>
-                    <span id="sync-text" class="text-sm font-bold text-blue-900">جاري تحليل ملفات المجلد...</span>
+                    <i class="fa-solid fa-cloud-arrow-down text-blue-500 animate-bounce text-xl"></i>
+                    <span id="sync-text" class="text-sm font-bold text-blue-900">جاري سحب البيانات من السحابة...</span>
                 </div>
                 <span id="sync-progress" class="text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-full">0%</span>
             </div>
@@ -72,9 +69,8 @@
                 <i class="fa-solid fa-robot"></i>
             </div>
             <div class="chat-bubble-bot p-4 rounded-2xl border border-gray-100 shadow-sm leading-relaxed text-sm">
-                <p class="font-bold text-brand-blue mb-1">أهلاً بك في النسخة المطورة.</p>
-                <p>لقد قمت بتحسين نظام القراءة ليدعم **ملفات متعددة**. يرجى وضع روابط الملفات (PDF) من داخل مجلد SharePoint لكي أتمكن من استخراج القوانين والتعليمات منها.</p>
-                <p class="mt-2 text-xs text-gray-500 italic">ملاحظة: تأكد من نسخ رابط كل ملف على حدة وليس رابط المجلد.</p>
+                <p class="font-bold text-brand-blue mb-1">أهلاً بك أستاذ عبد اللطيف.</p>
+                <p>يمكنك الآن استخدام روابط **Google Drive** أو **SharePoint**. تأكد فقط من جعل الملفات "متاحة للجميع لديهم الرابط".</p>
             </div>
         </div>
     </main>
@@ -92,57 +88,52 @@
 
     <!-- Settings Modal -->
     <div id="setup-modal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 p-4 backdrop-blur-md">
-        <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] border border-white/20">
+        <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="bg-brand-blue p-6 text-white flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-folder-tree text-brand-gold text-2xl"></i>
+                    <i class="fa-brands fa-google-drive text-brand-gold text-2xl"></i>
                     <div>
                         <h2 class="text-xl font-bold">إعدادات المصادر السحابية</h2>
-                        <p class="text-[10px] text-blue-300">اربط ملفات SharePoint الخاصة بك هنا</p>
+                        <p class="text-[10px] text-blue-300">Google Drive & SharePoint</p>
                     </div>
                 </div>
                 <button id="close-setup-btn" class="text-white/50 hover:text-white transition text-2xl">&times;</button>
             </div>
             
             <div class="p-6 overflow-y-auto flex-1 space-y-6">
-                <!-- API Key -->
                 <div>
                     <label class="block text-[11px] font-bold text-gray-400 mb-2 uppercase">Gemini API Key</label>
-                    <input type="password" id="api-key-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-sm font-mono outline-none focus:border-brand-blue/20 transition-all" placeholder="AIzaSy...">
+                    <input type="password" id="api-key-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-sm font-mono outline-none focus:border-brand-blue/20 shadow-sm" placeholder="AIzaSy...">
                 </div>
 
-                <!-- SharePoint Links -->
                 <div>
-                    <label class="block text-[11px] font-bold text-brand-blue mb-2 uppercase">روابط ملفات الـ PDF (رابط لكل سطر):</label>
-                    <textarea id="remote-files-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 h-48 text-[10px] font-mono outline-none focus:border-brand-blue/20 leading-loose" dir="ltr" placeholder="https://qalqilyadoe.sharepoint.com/..."></textarea>
-                    <p class="text-[10px] text-gray-400 mt-2 px-1 leading-relaxed">
-                        <i class="fa-solid fa-lightbulb text-brand-gold mr-1"></i> نصيحة: ادخل إلى المجلد في SharePoint، اضغط على النقاط الثلاث بجانب كل ملف PDF، اختر "نسخ الرابط"، ثم الصقه هنا.
-                    </p>
+                    <label class="block text-[11px] font-bold text-brand-blue mb-2 uppercase tracking-wide">روابط الملفات (رابط في كل سطر):</label>
+                    <textarea id="remote-files-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 h-48 text-[10px] font-mono outline-none focus:border-brand-blue/20 leading-loose" dir="ltr" placeholder="انسخ روابط Google Drive أو SharePoint هنا..."></textarea>
+                    <div class="mt-2 p-3 bg-blue-50 rounded-xl border border-blue-100 flex gap-2 items-start">
+                        <i class="fa-solid fa-info-circle text-blue-500 mt-0.5"></i>
+                        <p class="text-[10px] text-blue-800 leading-relaxed">
+                            لـ <b>Google Drive</b>: انسخ رابط المشاركة العادي (Anyone with link).<br>
+                            لـ <b>SharePoint</b>: انسخ رابط الملف الفردي (Copy Link).
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-brand-blue/5 p-4 rounded-2xl border border-brand-blue/10">
-                        <span class="block text-[10px] text-gray-500 font-bold uppercase mb-1">إجمالي البيانات</span>
-                        <span id="data-size-indicator" class="text-xl font-black text-brand-blue tracking-tighter text-left block">0.00 KB</span>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <span class="block text-[10px] text-gray-400 font-bold mb-1 uppercase">حجم البيانات</span>
+                        <span id="data-size-indicator" class="text-xl font-black text-brand-blue tracking-tighter block">0.00 KB</span>
                     </div>
-                    <div class="bg-brand-gold/5 p-4 rounded-2xl border border-brand-gold/10">
-                        <span class="block text-[10px] text-gray-500 font-bold uppercase mb-1">الصفحات المستخرجة</span>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <span class="block text-[10px] text-gray-400 font-bold mb-1 uppercase">الصفحات المقروءة</span>
                         <span id="pages-count" class="text-xl font-black text-brand-gold tracking-tighter block">0</span>
                     </div>
-                </div>
-
-                <!-- Preview Area -->
-                <div>
-                    <label class="block text-[11px] font-bold text-gray-400 mb-2 uppercase">معاينة النصوص النشطة:</label>
-                    <div id="text-preview" class="text-[10px] text-slate-500 bg-slate-50 p-4 rounded-2xl border border-slate-100 h-28 overflow-y-auto italic leading-relaxed">لا توجد نصوص محملة حالياً. يرجى المزامنة.</div>
                 </div>
             </div>
 
             <div class="p-6 bg-slate-50 flex gap-3 border-t">
-                <button id="clear-data-btn" class="px-6 py-4 text-xs text-red-600 font-bold hover:bg-red-50 rounded-2xl transition">مسح الذاكرة</button>
+                <button id="clear-data-btn" class="px-6 py-4 text-xs text-red-600 font-bold hover:bg-red-50 rounded-2xl transition">تفريغ الذاكرة</button>
                 <button id="save-setup-btn" class="flex-1 py-4 bg-brand-blue text-white font-bold rounded-2xl hover:bg-blue-800 transition shadow-xl flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-rotate"></i> حفظ وتحديث البيانات
+                    <i class="fa-solid fa-sync"></i> حفظ ومزامنة السحابة
                 </button>
             </div>
         </div>
@@ -159,7 +150,6 @@
         const syncProgress = document.getElementById('sync-progress');
         const syncBar = document.getElementById('sync-bar');
         const dataSizeIndicator = document.getElementById('data-size-indicator');
-        const textPreview = document.getElementById('text-preview');
         const pagesCountIndicator = document.getElementById('pages-count');
 
         let GEMINI_API_KEY = localStorage.getItem('gem_key') || "";
@@ -171,15 +161,29 @@
             remoteFilesInput.value = REMOTE_LINKS;
             const bytes = new Blob([KNOWLEDGE_BASE]).size;
             dataSizeIndicator.textContent = `${(bytes / 1024).toFixed(2)} KB`;
-            textPreview.textContent = KNOWLEDGE_BASE ? KNOWLEDGE_BASE.substring(0, 500) + "..." : "لا توجد بيانات حالياً.";
         }
 
-        function forceDirectDownload(link) {
+        // تحويل الروابط تلقائياً (جوجل درايف أو شيربوينت)
+        function convertToDirectLink(link) {
             let clean = link.trim();
             if (!clean) return null;
-            let url = new URL(clean);
-            url.searchParams.set('download', '1');
-            return url.toString();
+
+            try {
+                // معالجة Google Drive
+                if (clean.includes('drive.google.com')) {
+                    const fileIdMatch = clean.match(/\/d\/(.+?)\//);
+                    if (fileIdMatch) {
+                        return `https://docs.google.com/uc?export=download&id=${fileIdMatch[1]}`;
+                    }
+                }
+                
+                // معالجة SharePoint
+                let url = new URL(clean);
+                url.searchParams.set('download', '1');
+                return url.toString();
+            } catch (e) {
+                return clean;
+            }
         }
 
         async function syncRemoteFiles() {
@@ -194,14 +198,14 @@
             for (let link of rawLinks) {
                 try {
                     count++;
-                    syncText.textContent = `جاري معالجة ملف ${count} من ${rawLinks.length}...`;
+                    syncText.textContent = `جاري جلب الملف ${count} من ${rawLinks.length}...`;
                     let progressValue = Math.round((count/rawLinks.length)*100);
                     syncProgress.textContent = `${progressValue}%`;
                     syncBar.style.width = `${progressValue}%`;
 
-                    const downloadLink = forceDirectDownload(link);
-                    const response = await fetch(downloadLink);
-                    if (!response.ok) throw new Error("Net Error");
+                    const directLink = convertToDirectLink(link);
+                    const response = await fetch(directLink);
+                    if (!response.ok) throw new Error("Fetch Error");
                     
                     const arrayBuffer = await response.arrayBuffer();
                     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -213,7 +217,7 @@
                         cloudContent += content.items.map(item => item.str).join(' ') + ' ';
                     }
                 } catch (err) {
-                    console.error("Failed to fetch link:", link);
+                    console.error("فشل الرابط:", link);
                 }
             }
             
@@ -221,9 +225,9 @@
                 KNOWLEDGE_BASE = cloudContent;
                 localStorage.setItem('know_data', KNOWLEDGE_BASE);
                 pagesCountIndicator.textContent = totalPages;
-                addMsg(`تم بنجاح استخراج نصوص ${rawLinks.length} ملفات بنجاح. أنا جاهز الآن للإجابة.`, 'bot');
+                addMsg(`تمت المزامنة بنجاح! تم استخراج نصوص ${totalPages} صفحة من ${rawLinks.length} ملفات.`, 'bot');
             } else {
-                addMsg("تنبيه: فشل استخراج النصوص. تأكد من أن الروابط لملفات PDF وليست مجلدات، وأن الصلاحية هي 'Anyone with link'.", 'bot');
+                addMsg("تنبيه: لم أتمكن من قراءة الملفات. تأكد من أن الروابط مفتوحة للجميع (Anyone with link).", 'bot');
             }
             
             syncStatus.classList.add('hidden');
@@ -251,7 +255,7 @@
         };
 
         document.getElementById('clear-data-btn').onclick = () => {
-            if(confirm("هل تريد مسح قاعدة البيانات الحالية؟ ستحتاج للمزامنة مرة أخرى.")) {
+            if(confirm("هل تريد مسح البيانات المخزنة؟")) {
                 KNOWLEDGE_BASE = "";
                 localStorage.removeItem('know_data');
                 updateSetupUI();
@@ -260,9 +264,8 @@
         };
 
         const getSystemPrompt = () => `أنت "الدليل الإلكتروني الذكي لمدير المدرسة" المساعد الخاص للأستاذ عبد اللطيف رضوان.
-        قاعدة المعرفة الخاصة بك هي: ${KNOWLEDGE_BASE}. 
-        أجب فقط بناءً على هذه المعلومات. إذا سألك المستخدم عن شيء غير موجود، قل له "المعلومة غير متوفرة في الملفات المرفوعة".
-        نسّق إجابتك بشكل احترافي بأسلوب نقاط.`;
+        استند حصراً إلى هذه المعلومات: ${KNOWLEDGE_BASE}. 
+        إذا لم تجد الإجابة، قل أن المعلومة غير متوفرة. نسق الإجابة بنقاط واضحة.`;
 
         chatForm.onsubmit = async (e) => {
             e.preventDefault();
@@ -287,7 +290,7 @@
                 addMsg(reply, 'bot');
             } catch (err) {
                 removeTyping(tid);
-                addMsg("خطأ في الاتصال. تأكد من مفتاح API.", 'bot');
+                addMsg("خطأ في الاتصال بالسحابة.", 'bot');
             }
         };
 
