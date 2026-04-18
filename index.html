@@ -1,324 +1,212 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدليل الإلكتروني الذكي لمدير المدرسة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <title>مساعد مدراء المدارس الذكي | مديرية قلقيلية</title>
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Tajawal', 'sans-serif'] },
-                    colors: { brand: { blue: '#1e3a8a', gold: '#ca8a04', light: '#f8fafc' } }
-                }
-            }
-        }
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    </script>
+    <!-- استيراد خطوط عربية رسمية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .chat-bubble-bot { background-color: white; border-bottom-right-radius: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .chat-bubble-user { background-color: #e0f2fe; color: #0369a1; border-bottom-left-radius: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        :root {
+            --primary-color: #1b365d; /* أزرق ملكي رسمي */
+            --gold-accent: #c5a059;   /* ذهبي لإضفاء لمسة تقدير */
+            --text-main: #2c3e50;
+            --text-muted: #546e7a;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .official-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #d1d9e6;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* شريط علوي مزدوج يعكس الهوية البصرية الرسمية */
+        .top-bar {
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary-color) 75%, var(--gold-accent) 25%);
+        }
+
+        .content {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .header-section {
+            margin-bottom: 35px;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 25px;
+        }
+
+        .org-name {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .author-name {
+            font-size: 19px;
+            color: var(--gold-accent);
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .seal-icon {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 10px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            line-height: 1.4;
+        }
+
+        .description-box {
+            background-color: #fbfbfb;
+            border-right: 5px solid var(--primary-color);
+            padding: 25px;
+            margin: 30px 0;
+            text-align: right;
+            border-radius: 4px 0 0 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+        }
+
+        .description-box p {
+            color: var(--text-main);
+            font-size: 17px;
+            line-height: 2;
+            margin: 0;
+        }
+
+        .cta-section {
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 18px 50px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 20px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: 100%;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 4px 15px rgba(27, 54, 93, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #132745;
+            box-shadow: 0 8px 25px rgba(27, 54, 93, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 18px;
+            font-size: 13px;
+            color: #7f8c8d;
+            border-top: 1px dashed #e0e0e0;
+            text-align: center;
+        }
+
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 500px) {
+            .content { padding: 40px 25px; }
+            h1 { font-size: 26px; }
+            .description-box p { font-size: 16px; }
+            .btn { font-size: 18px; padding: 15px 25px; }
+        }
     </style>
 </head>
-<body class="bg-slate-100 h-screen flex flex-col font-sans overflow-hidden">
+<body>
 
-    <!-- Header -->
-    <header class="bg-brand-blue text-white shadow-lg p-4 flex items-center justify-between z-20 cursor-pointer select-none border-b-2 border-brand-gold">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-inner">
-                <i class="fa-solid fa-graduation-cap text-2xl"></i>
+    <div class="official-card">
+        <!-- شريط الهوية البصرية -->
+        <div class="top-bar"></div>
+
+        <div class="content">
+            <!-- قسم الترويسة -->
+            <div class="header-section">
+                <span class="org-name">مديرية التربية والتعليم - قلقيلية</span>
+                <span class="author-name">إعداد: الأستاذ عبد اللطيف رضوان</span>
+                
+                <div class="seal-icon">
+                    <svg width="65" height="65" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22S21 16 21 10V5L12 2L3 5V10C3 16 12 22 12 22Z" stroke="#1b365d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="#f8f9fa"/>
+                        <path d="M12 8V13" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M12 16H12.01" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <h1>مساعد مدراء المدارس الذكي</h1>
             </div>
-            <div>
-                <h1 class="text-lg font-bold leading-tight">الدليل الإلكتروني الذكي</h1>
-                <p class="text-[10px] text-blue-200 uppercase tracking-tighter">مديرية التربية والتعليم - قلقيلية</p>
+
+            <!-- قسم الوصف المنظم -->
+            <div class="description-box">
+                <p>
+                    تم تصميم هذا المساعد الرقمي بإشراف <b>قسم المتابعة الميدانية</b> ليعمل كمستشار ذكي فوري، يدعم الإدارة المدرسية في اتخاذ القرارات بناءً على اللوائح والتعليمات الرسمية المحدثة، ويسهل الوصول للمعلومة بدقة وموثوقية.
+                </p>
+            </div>
+
+            <!-- زر الإجراء الرئيسي -->
+            <div class="cta-section">
+                <a href="https://notebooklm.google.com/notebook/60d6778b-eba7-426d-9c8b-fc13ba64a2fd/preview" target="_blank" class="btn">
+                    <span>دخول المنصة الآمنة</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </a>
             </div>
         </div>
-        <div class="text-left">
-            <p class="text-xs opacity-90">إعداد: <span class="font-bold text-brand-gold">أ. عبد اللطيف رضوان</span></p>
-            <p class="text-[10px] opacity-70">دعم Google Drive & SharePoint</p>
-        </div>
-    </header>
 
-    <!-- Chat Area -->
-    <main id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-6 bg-slate-50 shadow-inner">
-        <!-- Sync Indicator -->
-        <div id="sync-status" class="hidden bg-white border-2 border-blue-100 p-4 rounded-2xl shadow-md space-y-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-cloud-arrow-down text-blue-500 animate-bounce text-xl"></i>
-                    <span id="sync-text" class="text-sm font-bold text-blue-900">جاري سحب البيانات من السحابة...</span>
-                </div>
-                <span id="sync-progress" class="text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-full">0%</span>
-            </div>
-            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div id="sync-bar" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
-            </div>
-        </div>
-        
-        <!-- Welcome Message -->
-        <div class="flex items-end gap-3 max-w-[85%]">
-            <div class="w-9 h-9 rounded-full bg-brand-blue text-white flex items-center justify-center shadow-md">
-                <i class="fa-solid fa-robot"></i>
-            </div>
-            <div class="chat-bubble-bot p-4 rounded-2xl border border-gray-100 shadow-sm leading-relaxed text-sm">
-                <p class="font-bold text-brand-blue mb-1">أهلاً بك أستاذ عبد اللطيف.</p>
-                <p>يمكنك الآن استخدام روابط **Google Drive** أو **SharePoint**. تأكد فقط من جعل الملفات "متاحة للجميع لديهم الرابط".</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- Input Area -->
-    <footer class="bg-white border-t p-4 z-20">
-        <form id="chat-form" class="flex items-center gap-3 max-w-5xl mx-auto">
-            <input type="text" id="user-input" autocomplete="off" placeholder="اسأل عن أي تعليمات إدارية..." 
-                class="flex-1 bg-slate-100 border-2 border-transparent focus:border-brand-blue/20 rounded-2xl py-3.5 px-6 text-sm outline-none transition-all">
-            <button type="submit" id="send-btn" class="bg-brand-blue text-white w-14 h-14 rounded-2xl flex items-center justify-center hover:bg-blue-800 active:scale-95 transition shadow-lg">
-                <i class="fa-solid fa-paper-plane text-xl"></i>
-            </button>
-        </form>
-    </footer>
-
-    <!-- Settings Modal -->
-    <div id="setup-modal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 p-4 backdrop-blur-md">
-        <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="bg-brand-blue p-6 text-white flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <i class="fa-brands fa-google-drive text-brand-gold text-2xl"></i>
-                    <div>
-                        <h2 class="text-xl font-bold">إعدادات المصادر السحابية</h2>
-                        <p class="text-[10px] text-blue-300">Google Drive & SharePoint</p>
-                    </div>
-                </div>
-                <button id="close-setup-btn" class="text-white/50 hover:text-white transition text-2xl">&times;</button>
-            </div>
-            
-            <div class="p-6 overflow-y-auto flex-1 space-y-6">
-                <div>
-                    <label class="block text-[11px] font-bold text-gray-400 mb-2 uppercase">Gemini API Key</label>
-                    <input type="password" id="api-key-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-sm font-mono outline-none focus:border-brand-blue/20 shadow-sm" placeholder="AIzaSy...">
-                </div>
-
-                <div>
-                    <label class="block text-[11px] font-bold text-brand-blue mb-2 uppercase tracking-wide">روابط الملفات (رابط في كل سطر):</label>
-                    <textarea id="remote-files-input" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 h-48 text-[10px] font-mono outline-none focus:border-brand-blue/20 leading-loose" dir="ltr" placeholder="انسخ روابط Google Drive أو SharePoint هنا..."></textarea>
-                    <div class="mt-2 p-3 bg-blue-50 rounded-xl border border-blue-100 flex gap-2 items-start">
-                        <i class="fa-solid fa-info-circle text-blue-500 mt-0.5"></i>
-                        <p class="text-[10px] text-blue-800 leading-relaxed">
-                            لـ <b>Google Drive</b>: انسخ رابط المشاركة العادي (Anyone with link).<br>
-                            لـ <b>SharePoint</b>: انسخ رابط الملف الفردي (Copy Link).
-                        </p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <span class="block text-[10px] text-gray-400 font-bold mb-1 uppercase">حجم البيانات</span>
-                        <span id="data-size-indicator" class="text-xl font-black text-brand-blue tracking-tighter block">0.00 KB</span>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <span class="block text-[10px] text-gray-400 font-bold mb-1 uppercase">الصفحات المقروءة</span>
-                        <span id="pages-count" class="text-xl font-black text-brand-gold tracking-tighter block">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-6 bg-slate-50 flex gap-3 border-t">
-                <button id="clear-data-btn" class="px-6 py-4 text-xs text-red-600 font-bold hover:bg-red-50 rounded-2xl transition">تفريغ الذاكرة</button>
-                <button id="save-setup-btn" class="flex-1 py-4 bg-brand-blue text-white font-bold rounded-2xl hover:bg-blue-800 transition shadow-xl flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-sync"></i> حفظ ومزامنة السحابة
-                </button>
-            </div>
+        <!-- التذييل الرسمي -->
+        <div class="footer">
+            نظام المتابعة الميدانية الذكي © مديرية قلقيلية
         </div>
     </div>
 
-    <script>
-        const chatContainer = document.getElementById('chat-container');
-        const chatForm = document.getElementById('chat-form');
-        const userInput = document.getElementById('user-input');
-        const setupModal = document.getElementById('setup-modal');
-        const remoteFilesInput = document.getElementById('remote-files-input');
-        const syncStatus = document.getElementById('sync-status');
-        const syncText = document.getElementById('sync-text');
-        const syncProgress = document.getElementById('sync-progress');
-        const syncBar = document.getElementById('sync-bar');
-        const dataSizeIndicator = document.getElementById('data-size-indicator');
-        const pagesCountIndicator = document.getElementById('pages-count');
-
-        let GEMINI_API_KEY = localStorage.getItem('gem_key') || "";
-        let KNOWLEDGE_BASE = localStorage.getItem('know_data') || "";
-        let REMOTE_LINKS = localStorage.getItem('remote_links') || ""; 
-
-        function updateSetupUI() {
-            document.getElementById('api-key-input').value = GEMINI_API_KEY;
-            remoteFilesInput.value = REMOTE_LINKS;
-            const bytes = new Blob([KNOWLEDGE_BASE]).size;
-            dataSizeIndicator.textContent = `${(bytes / 1024).toFixed(2)} KB`;
-        }
-
-        // تحويل الروابط تلقائياً (جوجل درايف أو شيربوينت)
-        function convertToDirectLink(link) {
-            let clean = link.trim();
-            if (!clean) return null;
-
-            try {
-                // معالجة Google Drive
-                if (clean.includes('drive.google.com')) {
-                    const fileIdMatch = clean.match(/\/d\/(.+?)\//);
-                    if (fileIdMatch) {
-                        return `https://docs.google.com/uc?export=download&id=${fileIdMatch[1]}`;
-                    }
-                }
-                
-                // معالجة SharePoint
-                let url = new URL(clean);
-                url.searchParams.set('download', '1');
-                return url.toString();
-            } catch (e) {
-                return clean;
-            }
-        }
-
-        async function syncRemoteFiles() {
-            let rawLinks = REMOTE_LINKS.split('\n').map(l => l.trim()).filter(l => l.length > 10);
-            if (rawLinks.length === 0) return;
-
-            syncStatus.classList.remove('hidden');
-            let cloudContent = "";
-            let totalPages = 0;
-            let count = 0;
-
-            for (let link of rawLinks) {
-                try {
-                    count++;
-                    syncText.textContent = `جاري جلب الملف ${count} من ${rawLinks.length}...`;
-                    let progressValue = Math.round((count/rawLinks.length)*100);
-                    syncProgress.textContent = `${progressValue}%`;
-                    syncBar.style.width = `${progressValue}%`;
-
-                    const directLink = convertToDirectLink(link);
-                    const response = await fetch(directLink);
-                    if (!response.ok) throw new Error("Fetch Error");
-                    
-                    const arrayBuffer = await response.arrayBuffer();
-                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    
-                    totalPages += pdf.numPages;
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        cloudContent += content.items.map(item => item.str).join(' ') + ' ';
-                    }
-                } catch (err) {
-                    console.error("فشل الرابط:", link);
-                }
-            }
-            
-            if (cloudContent.trim().length > 50) {
-                KNOWLEDGE_BASE = cloudContent;
-                localStorage.setItem('know_data', KNOWLEDGE_BASE);
-                pagesCountIndicator.textContent = totalPages;
-                addMsg(`تمت المزامنة بنجاح! تم استخراج نصوص ${totalPages} صفحة من ${rawLinks.length} ملفات.`, 'bot');
-            } else {
-                addMsg("تنبيه: لم أتمكن من قراءة الملفات. تأكد من أن الروابط مفتوحة للجميع (Anyone with link).", 'bot');
-            }
-            
-            syncStatus.classList.add('hidden');
-            updateSetupUI();
-        }
-
-        window.onload = () => { if (KNOWLEDGE_BASE) updateSetupUI(); };
-
-        document.querySelector('header').onclick = (e) => {
-            if (e.detail === 2) {
-                updateSetupUI();
-                setupModal.classList.replace('hidden', 'flex');
-            }
-        };
-
-        document.getElementById('close-setup-btn').onclick = () => setupModal.classList.replace('flex', 'hidden');
-        
-        document.getElementById('save-setup-btn').onclick = async () => {
-            GEMINI_API_KEY = document.getElementById('api-key-input').value.trim();
-            REMOTE_LINKS = remoteFilesInput.value.trim();
-            localStorage.setItem('gem_key', GEMINI_API_KEY);
-            localStorage.setItem('remote_links', REMOTE_LINKS);
-            setupModal.classList.replace('flex', 'hidden');
-            await syncRemoteFiles();
-        };
-
-        document.getElementById('clear-data-btn').onclick = () => {
-            if(confirm("هل تريد مسح البيانات المخزنة؟")) {
-                KNOWLEDGE_BASE = "";
-                localStorage.removeItem('know_data');
-                updateSetupUI();
-                pagesCountIndicator.textContent = "0";
-            }
-        };
-
-        const getSystemPrompt = () => `أنت "الدليل الإلكتروني الذكي لمدير المدرسة" المساعد الخاص للأستاذ عبد اللطيف رضوان.
-        استند حصراً إلى هذه المعلومات: ${KNOWLEDGE_BASE}. 
-        إذا لم تجد الإجابة، قل أن المعلومة غير متوفرة. نسق الإجابة بنقاط واضحة.`;
-
-        chatForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const msg = userInput.value.trim();
-            if (!msg || !GEMINI_API_KEY || !KNOWLEDGE_BASE) return;
-            userInput.value = '';
-            addMsg(msg, 'user');
-            const tid = showTyping();
-
-            try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        systemInstruction: { parts: [{ text: getSystemPrompt() }] },
-                        contents: [{ role: "user", parts: [{ text: msg }] }]
-                    })
-                });
-                const data = await res.json();
-                const reply = data.candidates[0].content.parts[0].text;
-                removeTyping(tid);
-                addMsg(reply, 'bot');
-            } catch (err) {
-                removeTyping(tid);
-                addMsg("خطأ في الاتصال بالسحابة.", 'bot');
-            }
-        };
-
-        function addMsg(t, type) {
-            const d = document.createElement('div');
-            d.className = type === 'user' ? 'flex justify-end' : 'flex gap-3 max-w-[90%]';
-            d.innerHTML = type === 'user' ? 
-                `<div class="chat-bubble-user p-4 rounded-2xl text-sm shadow-sm">${t}</div>` : 
-                `<div class="w-9 h-9 rounded-full bg-brand-blue text-white flex items-center justify-center flex-shrink-0 shadow-md"><i class="fa-solid fa-robot text-xs"></i></div>
-                 <div class="chat-bubble-bot p-4 rounded-2xl text-sm border border-gray-100 shadow-sm leading-relaxed">${t.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`;
-            chatContainer.appendChild(d);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function showTyping() {
-            const id = 't' + Date.now();
-            const d = document.createElement('div'); d.id = id; d.className = 'flex gap-3';
-            d.innerHTML = `<div class="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-robot text-xs text-slate-400"></i></div>
-                           <div class="chat-bubble-bot p-4 rounded-2xl flex gap-1.5 items-center">
-                               <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
-                               <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                               <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                           </div>`;
-            chatContainer.appendChild(d);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            return id;
-        }
-        function removeTyping(id) { document.getElementById(id)?.remove(); }
-    </script>
 </body>
 </html>
